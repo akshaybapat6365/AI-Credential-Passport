@@ -1,3 +1,5 @@
+// These tests rely on DOM globals provided by the `jsdom` environment
+// configured for Vitest in `vite.config.js`.
 import { describe, it, expect, vi } from 'vitest'
 import { renderHook, act } from '@testing-library/react'
 import { useWallet } from '../src/hooks/useWallet'
