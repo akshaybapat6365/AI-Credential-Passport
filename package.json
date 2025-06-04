@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -22,10 +23,14 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.8",
+    "@testing-library/react": "^14.3.0",
+    "@testing-library/react-hooks": "^8.0.1",
     "@vitejs/plugin-react": "^4.5.1",
     "autoprefixer": "^10.4.21",
+    "jsdom": "^26.1.0",
     "postcss": "^8.5.4",
     "tailwindcss": "^4.1.8",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vitest": "^1.4.0"
   }
 }
