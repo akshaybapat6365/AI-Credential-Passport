@@ -1,23 +1,31 @@
 import React, { useState } from 'react'
 import { Button } from './Button'
 import { useCredentials } from '../hooks/useCredentials'
-
-function issueCredential(data) {
-  // Simulate Prism SDK issuing
-  return Promise.resolve({ id: Date.now().toString(), ...data })
-}
+import { useWallet } from '../hooks/useWallet'
+import { issueCredential as polluxIssueCredential } from '../lib/pollux'
 
 export function AddCredentialModal() {
   const [open, setOpen] = useState(false)
   const [name, setName] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
   const { addCredential } = useCredentials()
+  const { did } = useWallet()
 
   const submit = async (e) => {
     e.preventDefault()
-    const cred = await issueCredential({ name })
-    addCredential(cred)
-    setName('')
-    setOpen(false)
+    setLoading(true)
+    setError(null)
+    try {
+      const cred = await polluxIssueCredential(did, { name })
+      addCredential(cred)
+      setName('')
+      setOpen(false)
+    } catch (err) {
+      setError(err)
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (!open) {
@@ -37,8 +45,13 @@ export function AddCredentialModal() {
           <Button type="button" variant="secondary" onClick={() => setOpen(false)}>
             Cancel
           </Button>
-          <Button type="submit">Issue</Button>
+          <Button type="submit" disabled={loading}>
+            {loading ? 'Issuing...' : 'Issue'}
+          </Button>
         </div>
+        {error && (
+          <p className="text-sm text-red-500 break-all">{error.message}</p>
+        )}
       </form>
     </div>
   )

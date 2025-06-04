@@ -1,8 +1,15 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { render, fireEvent, screen } from '@testing-library/react'
 import React from 'react'
 import { CredentialsProvider } from '../src/hooks/useCredentials'
 import { Dashboard } from '../src/components/Dashboard'
+vi.mock('../src/lib/pollux', () => ({
+  issueCredential: vi.fn().mockResolvedValue({ id: '1', name: 'Test', subjectId: 'did:test' }),
+}))
+
+vi.mock('../src/hooks/useWallet', () => ({
+  useWallet: () => ({ did: 'did:test' }),
+}))
 
 function Wrapper({ children }) {
   return React.createElement(CredentialsProvider, null, children)
