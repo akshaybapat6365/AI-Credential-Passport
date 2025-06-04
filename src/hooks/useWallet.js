@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { createOrLoadDID } from '../lib/prism'
 
 export function useWallet() {
   const [connected, setConnected] = useState(false)
@@ -16,9 +17,17 @@ export function useWallet() {
       }
       const walletApi = await window.cardano.lace.enable()
       setApi(walletApi)
+      if (!walletApi.getRewardAddresses || !walletApi.getNetworkId) {
+        throw new Error('Wallet missing required capabilities')
+      }
+      const networkId = await walletApi.getNetworkId()
+      if (networkId !== 0) {
+        throw new Error('Unsupported network')
+      }
       const rewards = await walletApi.getRewardAddresses()
       if (rewards && rewards[0]) {
-        setDid(`did:cardano:${rewards[0]}`)
+        const prismDid = await createOrLoadDID(rewards[0])
+        setDid(prismDid)
       }
       setConnected(true)
     } catch (err) {
