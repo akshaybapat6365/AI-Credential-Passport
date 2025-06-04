@@ -9,7 +9,7 @@ This project provides a minimal demonstration of managing credentials with a Rea
 
 ## Setup
 
-Install dependencies:
+First, install all dependencies:
 
 ```bash
 npm install
@@ -30,8 +30,11 @@ npm run build
 Run the test suite:
 
 ```bash
-npm test
+npm test -- --run
 ```
+
+The tests rely on a browser-like environment. Vitest is configured to use
+`jsdom` in `vite.config.js` so React components render correctly.
 
 ## Functionality
 

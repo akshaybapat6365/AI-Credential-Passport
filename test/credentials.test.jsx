@@ -1,3 +1,5 @@
+// Vitest is configured with the `jsdom` environment in `vite.config.js`
+// so these React component tests have DOM globals available.
 import { describe, it, expect, beforeEach } from 'vitest'
 import { render, fireEvent, screen } from '@testing-library/react'
 import React from 'react'
