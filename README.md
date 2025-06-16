@@ -30,6 +30,14 @@ Run the test suite:
 npm test
 ```
 
+## Linting
+
+Use ESLint to verify code style:
+
+```bash
+npm run lint
+```
+
 ## Functionality
 
 - **Wallet Connection** – Connects to the Lace wallet and exposes the resulting DID if a Cardano wallet is available.
