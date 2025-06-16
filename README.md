@@ -1,27 +1,27 @@
 # AI Credential Passport
 
-This project provides a minimal demonstration of managing credentials with a React front end. It allows you to connect a Cardano wallet, issue credentials, and generate/verify simple zero-knowledge proofs.
+This repository contains two small example applications for managing credentials:
+
+- **Vite app** – located in the project root (`src/`, `vite.config.js`).
+- **Next.js app** – found in `nextjs-app/`.
+
+Both front ends let you connect a Cardano wallet, issue credentials and verify simple zero-knowledge proofs. They can be run independently as described below.
 
 ## Prerequisites
 
 - **Node.js** v20 or later
 - **npm** (comes with Node.js)
 
-## Setup
+## Running the Vite App
 
-Install dependencies:
+Install dependencies and start the dev server from the repository root:
 
 ```bash
 npm install
-```
-
-Start the development server:
-
-```bash
 npm run dev
 ```
 
-Create a production build:
+Create a production build with:
 
 ```bash
 npm run build
@@ -31,6 +31,22 @@ Run the test suite:
 
 ```bash
 npm test
+```
+
+## Running the Next.js App
+
+From the `nextjs-app/` directory install packages and start the development server:
+
+```bash
+cd nextjs-app
+npm install
+npm run dev
+```
+
+Build the Next.js project for production with:
+
+```bash
+npm run build
 ```
 
 ## Functionality
