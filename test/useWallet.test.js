@@ -4,12 +4,16 @@ import { useWallet } from '../src/hooks/useWallet'
 import * as prism from '../src/lib/prism'
 
 function mockWindow(enableImpl) {
-  global.window = Object.create(window)
-  global.window.cardano = { lace: { enable: enableImpl } }
+  // Preserve the jsdom window while injecting the cardano API
+  Object.defineProperty(global.window, 'cardano', {
+    configurable: true,
+    value: { lace: { enable: enableImpl } },
+  })
 }
 
 beforeEach(() => {
   vi.restoreAllMocks()
+  delete global.window.cardano
 })
 
 describe('useWallet', () => {
@@ -37,7 +41,7 @@ describe('useWallet', () => {
   })
 
   it('sets error when wallet missing', async () => {
-    global.window = {}
+    delete global.window.cardano
     const { result } = renderHook(() => useWallet())
     await act(async () => {
       await result.current.connect()
