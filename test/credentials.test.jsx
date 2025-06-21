@@ -4,7 +4,12 @@ import React from 'react'
 import { CredentialsProvider } from '../src/hooks/useCredentials'
 import { Dashboard } from '../src/components/Dashboard'
 vi.mock('../src/lib/pollux', () => ({
-  issueCredential: vi.fn().mockResolvedValue({ id: '1', name: 'Test', subjectId: 'did:test' }),
+  issueCredential: vi.fn().mockResolvedValue({
+    id: '1',
+    name: 'Test',
+    subjectId: 'did:test',
+    jws: 'token',
+  }),
 }))
 
 vi.mock('../src/hooks/useWallet', () => ({
