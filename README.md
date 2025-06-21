@@ -30,6 +30,12 @@ Run the test suite:
 npm test
 ```
 
+### Configuration
+
+The expected Cardano network ID can be configured using the
+`VITE_EXPECTED_NETWORK_ID` environment variable. If not provided it defaults
+to `0` (pre-production).
+
 ## Linting
 
 Use ESLint to verify code style:

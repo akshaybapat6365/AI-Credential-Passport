@@ -1,6 +1,11 @@
 import { useState, useCallback } from 'react'
 import { createOrLoadDID } from '../lib/prism'
 
+const EXPECTED_NETWORK_ID = parseInt(
+  import.meta.env.VITE_EXPECTED_NETWORK_ID || '0',
+  10
+)
+
 export function useWallet() {
   const [connected, setConnected] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -21,8 +26,10 @@ export function useWallet() {
         throw new Error('Wallet missing required capabilities')
       }
       const networkId = await walletApi.getNetworkId()
-      if (networkId !== 0) {
-        throw new Error('Unsupported network')
+      if (networkId !== EXPECTED_NETWORK_ID) {
+        throw new Error(
+          `Unsupported network: expected ${EXPECTED_NETWORK_ID}, got ${networkId}`
+        )
       }
       const rewards = await walletApi.getRewardAddresses()
       if (rewards && rewards[0]) {
