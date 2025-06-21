@@ -14,7 +14,10 @@ export function CredentialCard({ cred }) {
     try {
       const p = await generateProofForCredential(cred)
       setProof(p)
-      setModal({ title: 'Proof Generated', message: JSON.stringify(p) })
+      setModal({
+        title: 'Proof Generated',
+        message: JSON.stringify(p, null, 2),
+      })
     } catch (err) {
       setModal({ title: 'Generation Failed', message: err.message })
     } finally {
