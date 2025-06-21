@@ -3,7 +3,7 @@ import SDK from '@atala/prism-wallet-sdk'
 const apollo = new SDK.Apollo()
 const castor = new SDK.Castor(apollo)
 
-export async function createOrLoadDID(address) {
+export async function createOrLoadDID(address: string): Promise<string> {
   const key = `prismDid-${address}`
   const stored = localStorage.getItem(key)
   if (stored) {

@@ -11,7 +11,11 @@
  *   2. Return the proof in whatever format the verifier
  *      requires.
  */
-export async function generateProofForCredential(credential) {
+import type { Credential, Proof } from './types'
+
+export async function generateProofForCredential(
+  credential: Credential
+): Promise<Proof> {
   if (!credential) {
     throw new Error('Credential required')
   }
@@ -26,7 +30,7 @@ export async function generateProofForCredential(credential) {
  * Midnight SDK it should validate the proof and return the
  * verification result.
  */
-export async function verifyProof(proof) {
+export async function verifyProof(proof: Proof | null): Promise<boolean> {
   if (!proof) {
     throw new Error('Proof required')
   }

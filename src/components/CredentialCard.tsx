@@ -1,28 +1,32 @@
 import React, { useState } from 'react'
 import { Button } from './Button'
 import { generateProofForCredential, verifyProof } from '../lib/zkp'
+import type { Credential, Proof } from '../lib/types'
 
-export function CredentialCard({ cred }) {
-  const [proof, setProof] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [modal, setModal] = useState(null)
+export function CredentialCard({ cred }: { cred: Credential }) {
+  const [proof, setProof] = useState<Proof | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [modal, setModal] = useState<{
+    title: string
+    message: string
+  } | null>(null)
 
-  const close = () => setModal(null)
+  const close = (): void => setModal(null)
 
-  const handleGenerate = async () => {
+  const handleGenerate = async (): Promise<void> => {
     setLoading(true)
     try {
       const p = await generateProofForCredential(cred)
       setProof(p)
       setModal({ title: 'Proof Generated', message: JSON.stringify(p) })
     } catch (err) {
-      setModal({ title: 'Generation Failed', message: err.message })
+      setModal({ title: 'Generation Failed', message: (err as Error).message })
     } finally {
       setLoading(false)
     }
   }
 
-  const handleVerify = async () => {
+  const handleVerify = async (): Promise<void> => {
     setLoading(true)
     try {
       const result = await verifyProof(proof)
@@ -31,7 +35,7 @@ export function CredentialCard({ cred }) {
         message: result ? 'Valid proof' : 'Invalid proof',
       })
     } catch (err) {
-      setModal({ title: 'Verification Failed', message: err.message })
+      setModal({ title: 'Verification Failed', message: (err as Error).message })
     } finally {
       setLoading(false)
     }

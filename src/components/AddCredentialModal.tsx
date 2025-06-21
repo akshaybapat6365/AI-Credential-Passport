@@ -5,24 +5,24 @@ import { useWallet } from '../hooks/useWallet'
 import { issueCredential as polluxIssueCredential } from '../lib/pollux'
 
 export function AddCredentialModal() {
-  const [open, setOpen] = useState(false)
-  const [name, setName] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [open, setOpen] = useState<boolean>(false)
+  const [name, setName] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState<Error | null>(null)
   const { addCredential } = useCredentials()
   const { did } = useWallet()
 
-  const submit = async (e) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
     try {
-      const cred = await polluxIssueCredential(did, { name })
+      const cred = await polluxIssueCredential(did!, { name })
       addCredential(cred)
       setName('')
       setOpen(false)
     } catch (err) {
-      setError(err)
+      setError(err as Error)
     } finally {
       setLoading(false)
     }

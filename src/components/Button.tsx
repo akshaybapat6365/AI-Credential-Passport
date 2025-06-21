@@ -28,7 +28,12 @@ const buttonVariants = cva(
   }
 )
 
-export function Button({ className, variant, size, ...props }) {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'
+  size?: 'default' | 'sm' | 'lg' | 'icon'
+}
+
+export function Button({ className, variant, size, ...props }: ButtonProps) {
   return (
     <button className={cn(buttonVariants({ variant, size, className }))} {...props} />
   )

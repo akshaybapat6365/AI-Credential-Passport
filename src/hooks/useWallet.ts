@@ -1,21 +1,32 @@
 import { useState, useCallback } from 'react'
 import { createOrLoadDID } from '../lib/prism'
+import type { WalletApi } from '../lib/types'
+
+declare global {
+  interface Window {
+    cardano?: {
+      lace?: {
+        enable: () => Promise<WalletApi>
+      }
+    }
+  }
+}
 
 export function useWallet() {
   const [connected, setConnected] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const [did, setDid] = useState(null)
-  const [api, setApi] = useState(null)
+  const [error, setError] = useState<Error | null>(null)
+  const [did, setDid] = useState<string | null>(null)
+  const [api, setApi] = useState<WalletApi | null>(null)
 
-  const connect = useCallback(async () => {
+  const connect = useCallback(async (): Promise<void> => {
     setLoading(true)
     setError(null)
     try {
       if (!window?.cardano?.lace) {
         throw new Error('Lace wallet not found')
       }
-      const walletApi = await window.cardano.lace.enable()
+      const walletApi: WalletApi = await window.cardano.lace.enable()
       setApi(walletApi)
       if (!walletApi.getRewardAddresses || !walletApi.getNetworkId) {
         throw new Error('Wallet missing required capabilities')
@@ -31,14 +42,14 @@ export function useWallet() {
       }
       setConnected(true)
     } catch (err) {
-      setError(err)
+      setError(err as Error)
       setConnected(false)
     } finally {
       setLoading(false)
     }
   }, [])
 
-  const disconnect = useCallback(() => {
+  const disconnect = useCallback((): void => {
     setConnected(false)
     setApi(null)
     setDid(null)
