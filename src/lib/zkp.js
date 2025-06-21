@@ -11,12 +11,24 @@
  *   2. Return the proof in whatever format the verifier
  *      requires.
  */
+import {
+  sampleSigningKey,
+  signData,
+  signatureVerifyingKey,
+  verifySignature,
+} from '@midnight-ntwrk/ledger'
+
+const signingKey = sampleSigningKey()
+const verifyingKey = signatureVerifyingKey(signingKey)
+const encoder = new TextEncoder()
+
 export async function generateProofForCredential(credential) {
   if (!credential) {
     throw new Error('Credential required')
   }
-  // In lieu of real proving logic we return a predictable object.
-  return { proof: `proof-for-${credential.id}` }
+  const payload = encoder.encode(JSON.stringify(credential))
+  const signature = signData(signingKey, payload)
+  return { credential, signature, verifyingKey }
 }
 
 /**
@@ -30,6 +42,10 @@ export async function verifyProof(proof) {
   if (!proof) {
     throw new Error('Proof required')
   }
-  // Stubbed verification always succeeds for non‑null input.
-  return true
+  const { credential, signature, verifyingKey: vk } = proof
+  if (!credential || !signature || !vk) {
+    throw new Error('Invalid proof format')
+  }
+  const payload = encoder.encode(JSON.stringify(credential))
+  return verifySignature(vk, payload, signature)
 }

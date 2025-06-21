@@ -16,6 +16,7 @@
   "type": "commonjs",
   "dependencies": {
     "@atala/prism-wallet-sdk": "^5.2.0",
+    "@midnight-ntwrk/ledger": "^4.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "react": "^18.2.0",
