@@ -1,16 +1,19 @@
 import React from 'react'
 import { Header } from './components/Header'
-import { CredentialsProvider } from './hooks/useCredentials'
-import { Dashboard } from './components/Dashboard'
+import { FeedbackProvider } from './hooks/useFeedback'
+import { FeedbackSpace } from './components/FeedbackSpace'
+import { WalletProvider } from './hooks/useWallet'
 
 function App() {
   return (
-    <CredentialsProvider>
-      <div className="min-h-screen bg-background text-foreground">
-        <Header />
-        <Dashboard />
-      </div>
-    </CredentialsProvider>
+    <WalletProvider>
+      <FeedbackProvider>
+        <div className="min-h-screen bg-background text-foreground">
+          <Header />
+          <FeedbackSpace />
+        </div>
+      </FeedbackProvider>
+    </WalletProvider>
   )
 }
 
