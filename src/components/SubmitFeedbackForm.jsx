@@ -34,7 +34,7 @@ export function SubmitFeedbackForm() {
     <Card>
       <CardHeader>
         <CardTitle>Share Your Feedback</CardTitle>
-      </Header>
+      </CardHeader>
       <CardContent className="space-y-4">
         <Textarea
           placeholder="What's on your mind? Your feedback is anonymous."
