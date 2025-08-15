@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useWallet } from '../hooks/useWallet'
 import { useFeedback } from '../hooks/useFeedback'
-import { Button } from './ui/button'
+import { Button } from './Button'
 import { Textarea } from './ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 
@@ -34,7 +34,7 @@ export function SubmitFeedbackForm() {
     <Card>
       <CardHeader>
         <CardTitle>Share Your Feedback</CardTitle>
-      </Header>
+      </CardHeader>
       <CardContent className="space-y-4">
         <Textarea
           placeholder="What's on your mind? Your feedback is anonymous."
