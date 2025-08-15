@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useWallet } from '../hooks/useWallet'
 import { useFeedback } from '../hooks/useFeedback'
-import { Button } from './ui/button'
+import { Button } from './Button'
 import { Textarea } from './ui/textarea'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card'
 
